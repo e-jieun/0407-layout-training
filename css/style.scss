@@ -1,0 +1,117 @@
+// common
+*{
+  margin: 0;
+  padding: 0;
+}
+//variable
+$color-bk: black;
+$color-c4: #c4c4c4;
+$color-dp: #8068AD;
+$color-pp: #C8B5C8;
+$color-yel: #EDEBB2;
+$color-cr: #FFFEF9;
+$border-bk: 1px solid black;
+$border-red: 1px solid red;
+$per100: 100%;
+//class-set
+@mixin flex-align-justify($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+@mixin border($px, $color) {
+  border: $px solid $color;
+}
+@mixin width-height($width, $height){
+  width: $width;
+  height: $height;
+  @include flex-align-justify(center, flex-start);
+  flex-direction: column;
+}
+//style
+#root{
+  @include width-height(100vw, 100vh);
+  #con{
+    @include width-height(inherit, inherit);
+    @include flex-align-justify(center, center);
+    flex-direction: row;
+    // Q1. class로 호출해도, 순서 선택자로 호출해도 text-align: start;가 재할당이 되지 않고, center로만 적용이 됩니다. 이유가 무엇인지 궁금합니다....
+    // .title{
+    //   text-align: start;
+    // }
+    >div:nth-child(1){
+      // Q2. flex-grow로 적용했는데 뷰포트에 따른 메뉴바의 크기 변동 적용이 잘 안되는 것 같습니다.
+      flex-grow: 1;
+      height: inherit;
+      // @include border(1px, red);
+      @include flex-align-justify(center, center);
+      >div{
+        // @include border(1px, red);
+        @include width-height(inherit, 50%);
+        @include flex-align-justify(center, space-between);
+      }
+    }
+    >div:nth-child(2){
+      flex-grow: 9;
+      height: inherit;
+      // @include border(1px, red);
+      background-color: rgb(35, 161, 211);
+      @include flex-align-justify(center, center);
+      >div{
+        @include width-height(95%, 90%);
+        // @include border(1px, #fff);
+        @include flex-align-justify(center, center);
+        >div{
+        @include width-height($per100, $per100);
+          // @include border(1px, #fff);
+          background-color: #fff;
+          flex-grow: 5;
+          @include flex-align-justify(center, center);
+          flex-direction: column;
+          overflow: hidden;
+          >div:nth-child(1){
+            @include width-height(90%, 20%);
+            @include flex-align-justify(center, center);
+            // @include border(1px, black);
+            color: rgb(35, 161, 211);
+            font-size: 1.5rem;
+            font-weight: 700;
+            >div{
+              @include width-height(90%, 70%);
+            }
+            >div:nth-child(2){
+              @include width-height(95%, 2px);
+              background-color: rgb(35, 161, 211);
+            }
+          }
+          >div:nth-child(2){
+            @include width-height(90%, 70%);
+            position: relative;
+            top: 5vh;
+          }
+          
+        }
+        >div:nth-child(2){
+          position: relative;
+          top: 2vh;
+        }
+        >div:nth-child(3){
+          // !div:nth-child(3) 부분의 크기를 잘 정해줘야 함
+          @include width-height(inherit, 20vh);
+          background: none;
+          @include flex-align-justify(center, center);
+          div{
+            @include width-height(30px, 30px);
+            border-radius: $per100;
+            color: #fff;
+            border: 3px solid #fff;
+            @include flex-align-justify(center, center);
+            position: relative;
+            top: 2vh;
+          }
+        }
+      }
+
+    }
+  }
+}
